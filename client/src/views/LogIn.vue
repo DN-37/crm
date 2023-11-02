@@ -46,14 +46,15 @@ export default {
         }
     },
     methods: {
-        submitForm() {
+        async submitForm() {
+            this.$store.commit('setIsLoading', true)
             axios.defaults.headers.common['Authorization'] = ''
             localStorage.removeItem('token')
             const formData = {
                 username: this.username,
                 password: this.password
             }
-            axios
+            await axios
                 .post('/api/v1/token/login/', formData)
                 .then(response => {
                     const token = response.data.auth_token
@@ -71,6 +72,7 @@ export default {
                         this.errors.push('Что-то пошло не так. Пожалуйста, попробуйте еще раз!')
                     }
                 })
+            this.$store.commit('setIsLoading', false)
         }
     }
 }
