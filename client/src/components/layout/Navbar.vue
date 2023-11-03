@@ -8,6 +8,7 @@
 
         <div class="navbar-menu">
             <div class="navbar-end">
+                <router-link to="/dashboard/leads" class="navbar-item">Руководители</router-link>
                 <div class="navbar-item">
                     <div class="buttons">
                         <router-link to="/sign-up" class="button is-success"><strong>Регистрация</strong></router-link>
