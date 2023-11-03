@@ -1,2 +1,6 @@
 .venv
 server/db.sqlite3
+server/*.pyc
+server/*/*.pyc
+server/*/*/*.pyc
+server/*/*/*/*.pyc
