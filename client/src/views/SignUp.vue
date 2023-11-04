@@ -55,7 +55,7 @@ export default {
         }
     },
     methods: {
-        submitForm() {
+        async submitForm() {
             this.errors = []
             if (this.username === '') {
                 this.errors.push('Имя пользователя отсутствует')
@@ -67,11 +67,13 @@ export default {
                 this.errors.push('Пароли не совпадают')
             }
             if (!this.errors.length) {
+                this.$store.commit('setIsLoading', true)
+
                 const formData = {
                     username: this.username,
                     password: this.password
                 }
-                axios
+                await axios
                     .post('/api/v1/users/', formData)
                     .then(response => {
                         toast({
@@ -93,6 +95,7 @@ export default {
                             this.errors.push('Что-то пошло не так. Пожалуйста, попробуйте еще раз!')
                         }
                     })
+                this.$store.commit('setIsLoading', false)
             }
         }
     }
