@@ -2,7 +2,9 @@
     <div class="container">
         <div class="columns is-multiline">
             <div class="column is-12">
-                <h1 class="title">Руководители</h1>
+                <h1 class="title">Лиды</h1>
+
+                <router-link to="/dashboard/leads/add">Добавить лида</router-link>
             </div>
 
             <div class="column is-12">
@@ -10,7 +12,7 @@
                     <thead>
                         <tr>
                             <th>Компания</th>
-                            <th>Контакты руководителя</th>
+                            <th>Контакты</th>
                             <th>Статус</th>
                         </tr>
                     </thead>
