@@ -2,7 +2,7 @@
     <div class="container">
         <div class="columns is-multiline">
             <div class="column is-12">
-                <h1 class="title">Добавление лида</h1>
+                <h1 class="title">Редактировать {{ lead.company }}</h1>
             </div>
 
             <div class="column is-12">
@@ -10,49 +10,49 @@
                     <div class="field">
                         <label>Компания</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="company">
+                            <input type="text" class="input" v-model="lead.company">
                         </div>
                     </div>
 
                     <div class="field">
                         <label>Контакты</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="contact_person">
+                            <input type="text" class="input" v-model="lead.contact_person">
                         </div>
                     </div>
 
                     <div class="field">
                         <label>Электронная почта</label>
                         <div class="control">
-                            <input type="email" class="input" v-model="email">
+                            <input type="email" class="input" v-model="lead.email">
                         </div>
                     </div>
 
                     <div class="field">
-                        <label>Телефон</label>
+                        <label>Номер телефона</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="phone">
+                            <input type="text" class="input" v-model="lead.phone">
                         </div>
                     </div>
 
                     <div class="field">
                         <label>Веб-сайт</label>
                         <div class="control">
-                            <input type="text" class="input" v-model="website">
+                            <input type="text" class="input" v-model="lead.website">
                         </div>
                     </div>
 
                     <div class="field">
                         <label>Доверие</label>
                         <div class="control">
-                            <input type="number" class="input" v-model="confidence">
+                            <input type="number" class="input" v-model="lead.confidence">
                         </div>
                     </div>
 
                     <div class="field">
                         <label>Расчетная стоимость</label>
                         <div class="control">
-                            <input type="number" class="input" v-model="estimated_value">
+                            <input type="number" class="input" v-model="lead.estimated_value">
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                         <label>Статус</label>
                         <div class="control">
                             <div class="select">
-                                <select v-model="status">
+                                <select v-model="lead.status">
                                     <option value="new">Новый</option>
                                     <option value="inprogress">В процессе</option>
                                     <option value="lost">Отрицательный</option>
@@ -74,7 +74,7 @@
                         <label>Приоритет</label>
                         <div class="control">
                             <div class="select">
-                                <select v-model="priority">
+                                <select v-model="lead.priority">
                                     <option value="low">Низкий</option>
                                     <option value="medium">Средний</option>
                                     <option value="high">Высокий</option>
@@ -85,7 +85,7 @@
 
                     <div class="field">
                         <div class="control">
-                            <button class="button is-success">Отправить</button>
+                            <button class="button is-success">Сохранить</button>
                         </div>
                     </div>
                 </form>
@@ -97,49 +97,45 @@
 <script>
 import axios from 'axios'
 import { toast } from 'bulma-toast'
-
 export default {
-    name: 'AddLead',
+    name: 'EditLead',
     data() {
         return {
-            company: '',
-            contact_person: '',
-            email: '',
-            phone: '',
-            estimated_value: 0,
-            confidence: 0,
-            website: '',
-            status: 'new',
-            priority: 'medium'
+            lead: {}
         }
     },
+    mounted() {
+        this.getLead()
+    },
     methods: {
+        async getLead() {
+            this.$store.commit('setIsLoading', true)
+            const leadID = this.$route.params.id
+            axios
+                .get(`/api/v1/leads/${leadID}/`)
+                .then(response => {
+                    this.lead = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            this.$store.commit('setIsLoading', false)
+        },
         async submitForm() {
             this.$store.commit('setIsLoading', true)
-            const lead = {
-                company: this.company,
-                contact_person: this.contact_person,
-                email: this.email,
-                phone: this.phone,
-                website: this.website,
-                estimated_value: this.estimated_value,
-                confidence: this.confidence,
-                status: this.status,
-                priority: this.priority
-            }
-            await axios
-                .post('/api/v1/leads/', lead)
+            const leadID = this.$route.params.id
+            axios
+                .patch(`/api/v1/leads/${leadID}/`, this.lead)
                 .then(response => {
                     toast({
-                        message: 'Лид был успешно добавлен',
+                        message: 'Лид был успешно обновлен',
                         type: 'is-success',
                         dismissible: true,
                         pauseOnHover: true,
                         duration: 2000,
                         position: 'bottom-right',
                     })
-
-                    this.$router.push('/dashboard/leads')
+                    this.$router.push(`/dashboard/leads/${leadID}`)
                 })
                 .catch(error => {
                     console.log(error)
@@ -148,4 +144,4 @@ export default {
         }
     }
 }
-</script>   
+</script>

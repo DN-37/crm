@@ -3,6 +3,8 @@
         <div class="columns is-multiline">
             <div class="column is-12">
                 <h1 class="title">{{ lead.company }}</h1>
+                <router-link :to="{ name: 'EditLead', params: { id: lead.id } }"
+                    class="button is-light">Редактировать</router-link>
             </div>
 
             <div class="column is-6">
