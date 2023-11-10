@@ -21,7 +21,7 @@ export default {
             await axios
                 .post('/api/v1/token/logout/')
                 .then(response => {
-                    console.log('Logged out')
+                    console.log('Выход')
                 })
                 .catch(error => {
                     console.log(JSON.stringify(error))
@@ -29,6 +29,10 @@ export default {
 
             axios.defaults.headers.common['Authorization'] = ''
             localStorage.removeItem('token')
+            localStorage.removeItem('username')
+            localStorage.removeItem('userid')
+            localStorage.removeItem('team_name')
+            localStorage.removeItem('team_id')
             this.$store.commit('removeToken')
             this.$router.push('/')
         }
