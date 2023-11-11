@@ -8,11 +8,18 @@
 
         <div class="navbar-menu">
             <div class="navbar-end">
-                <router-link to="/dashboard/leads" class="navbar-item">Лиды</router-link>
+
                 <div class="navbar-item">
                     <div class="buttons">
-                        <router-link to="/sign-up" class="button is-success"><strong>Регистрация</strong></router-link>
-                        <router-link to="/log-in" class="button is-light">Авторизация</router-link>
+                        <template v-if="!$store.state.isAuthenticated">
+                            <router-link to="/sign-up" class="button is-success"><strong>Регистрация</strong></router-link>
+                            <router-link to="/log-in" class="button is-light">Авторизация</router-link>
+                        </template>
+
+                        <template v-else>
+                            <router-link to="/dashboard/leads" class="button is-light">Лиды</router-link>
+                            <router-link to="/dashboard/my-account" class="button is-info">Мой профиль</router-link>
+                        </template>
                     </div>
                 </div>
             </div>

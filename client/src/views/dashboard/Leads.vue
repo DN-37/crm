@@ -14,6 +14,7 @@
                             <th>Компания</th>
                             <th>Контакты</th>
                             <th>Статус</th>
+                            <th></th>
                         </tr>
                     </thead>
 
@@ -22,6 +23,9 @@
                             <td>{{ lead.company }}</td>
                             <td>{{ lead.contact_person }}</td>
                             <td>{{ lead.status }}</td>
+                            <td>
+                                <router-link :to="{ name: 'Lead', params: { id: lead.id } }">Детали</router-link>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
