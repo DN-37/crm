@@ -12,6 +12,7 @@ import AddLead from '../views/dashboard/AddLead.vue'
 import Lead from '../views/dashboard/Lead.vue'
 import EditLead from '../views/dashboard/EditLead.vue'
 import AddTeam from '../views/dashboard/AddTeam.vue'
+import Team from '../views/dashboard/Team.vue'
 
 const routes = [
   {
@@ -89,6 +90,14 @@ const routes = [
     path: '/dashboard/add-team',
     name: 'AddTeam',
     component: AddTeam,
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: '/dashboard/team',
+    name: 'Team',
+    component: Team,
     meta: {
       requireLogin: true
     }
