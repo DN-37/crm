@@ -11,6 +11,9 @@
                 <div class="box">
                     <h2 class="subtitle">Детали</h2>
 
+                    <template v-if="lead.assigned_to">
+                        <p><strong>Назначить: </strong>{{ lead.assigned_to.username }}</p>
+                    </template>
                     <p><strong>Статус: </strong>{{ lead.status }}</p>
                     <p><strong>Приоритет: </strong>{{ lead.priority }}</p>
                     <p><strong>Доверие: </strong>{{ lead.confidence }}</p>
