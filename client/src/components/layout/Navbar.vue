@@ -18,6 +18,7 @@
 
                         <template v-else>
                             <router-link to="/dashboard/team" class="button is-light">Команда</router-link>
+                            <router-link to="/dashboard/clients" class="navbar-item">Клиенты</router-link>
                             <router-link to="/dashboard/leads" class="button is-light">Лиды</router-link>
                             <router-link to="/dashboard/my-account" class="button is-info">Мой профиль</router-link>
                         </template>
