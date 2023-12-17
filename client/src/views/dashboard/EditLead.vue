@@ -84,6 +84,20 @@
                     </div>
 
                     <div class="field">
+                        <label>Назначить</label>
+                        <div class="control">
+                            <div class="select">
+                                <select v-model="lead.assigned_to">
+                                    <option value="" selected>Выбрать участника</option>
+                                    <option v-for="member in team.members" v-bind:key="member.id" v-bind:value="member.id">
+                                        {{ member.username }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
                         <div class="control">
                             <button class="button is-success">Сохранить</button>
                         </div>
@@ -101,11 +115,15 @@ export default {
     name: 'EditLead',
     data() {
         return {
-            lead: {}
+            lead: {},
+            team: {
+                members: []
+            }
         }
     },
     mounted() {
         this.getLead()
+        this.getTeam()
     },
     methods: {
         async getLead() {
@@ -119,6 +137,19 @@ export default {
                 .catch(error => {
                     console.log(error)
                 })
+            this.$store.commit('setIsLoading', false)
+        },
+        async getTeam() {
+            this.$store.commit('setIsLoading', true)
+            await axios
+                .get('/api/v1/teams/get_my_team/')
+                .then(response => {
+                    this.team = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
             this.$store.commit('setIsLoading', false)
         },
         async submitForm() {
